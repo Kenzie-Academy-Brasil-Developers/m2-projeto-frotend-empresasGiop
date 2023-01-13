@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>adminPage</title>
-    <link rel="stylesheet" href="/styles/globalStyles.css">
-    <link rel="stylesheet" href="/styles/admin.css">
+    <link rel="stylesheet" href="../styles/globalStyles.css">
+    <link rel="stylesheet" href="../styles/admin.css">
 </head>
 <body>
     <header>
@@ -37,18 +37,18 @@
         </div>
     </main>
     <dialog id="showDeparment">
-        
+
 
     </dialog>
     <dialog id="createDepartment">
         <form class="createDepartmentForm">
             <button id="closeModal">
-                <img src="/assets/Vector (3).png" alt="">
+                <img src="../assets/Vector (3).png" alt="">
             </button>
             <h2>Criar Departamento</h2>
-            <input type="text" name="deparment" placeholder="Nome do departamento">
+            <input type="text" name="name" placeholder="Nome do departamento">
             <input type="text" name="description" placeholder="Descrição">
-            <select name="" id="selEmpresa">
+            <select name="company_uuid" id="selEmpresa">
                 <option value="selecionar empresa">selecionar empresa</option>
             </select>
             <button class="bCss" type="submit" id="submitBtn" >Criar o departamento</button>
@@ -57,7 +57,7 @@
 
     <dialog id="editDepartment">
         <button id="closeModalEdit">
-            <img src="/assets/Vector (3).png" alt="">
+            <img src="../assets/Vector (3).png" alt="">
         </button>
         <form>
             <input type="text" name="description" placeholder=`${description}`>
@@ -67,7 +67,7 @@
 
     <dialog id="deleteDepartment">
         <button id="closeModalDel">
-            <img src="/assets/Vector (3).png" alt="">
+            <img src="../assets/Vector (3).png" alt="">
         </button>
        <h2>Realmente deseja deletar o Departamento `${departamento.name}` e demitir seus funcionários?</h2>
        <button type="submit" class="gCss">
@@ -77,7 +77,7 @@
 
     <dialog id="editUser">
         <button id="closeModalEditUser">
-            <img src="/assets/Vector (3).png" alt="">
+            <img src="../assets/Vector (3).png" alt="">
         </button>
         <form>
             <select name="" id="">
@@ -97,14 +97,14 @@
 
     <dialog id="deleteUserDialog">
         <button id="closeModalDeleteUser">
-            <img src="/assets/Vector (3).png" alt="">
+            <img src="../assets/Vector (3).png" alt="">
         </button>
         <h2>Realmente deseja remover o usuário `${usuario.name}`?</h2>
         <button type="submit" class="gCss">Deletar</button>
     </dialog>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script type="module" src="/scripts/admin.js"></script>
+    <script type="module" src="../scripts/admin.js"></script>
 
     
 </body>

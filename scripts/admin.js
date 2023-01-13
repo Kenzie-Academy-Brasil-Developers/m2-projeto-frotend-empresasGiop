@@ -42,13 +42,13 @@ async function allDepartmentsByAdmin(){
         <p>${departamento.description}</p>
         <p>${departamento.companies.name}</p>
         <div class="functionsBtns">
-        <button value="${departamento.uuid}" id="visualizar">
+        <button class="${departamento.uuid}" id="visualizar">
             <img src="/assets/Vector (4).png" alt="">
         </button>
-        <button value="${departamento.uuid}" id ="editar" >
+        <button class="${departamento.uuid}" id ="editar" >
             <img src="/assets/Vector (2).png" alt="">
         </button>
-        <button value="${departamento.uuid}" id="delete">
+        <button class="${departamento.uuid}" id="delete">
             <img src="/assets/Vector (5).png" alt="">
         </button>
         </div>
@@ -80,13 +80,13 @@ async function departmentByCompany(){
             <p>${department.description}</p>
             <p>${department.companies.name}</p>
             <div class="functionsBtns">
-            <button value="${department.uuid}" id="visualizar">
+            <button class="${department.uuid}" id="visualizar">
                 <img src="/assets/Vector (4).png" alt="">
             </button>
-            <button value="${department.uuid}" id="editar">
+            <button class="${department.uuid}" id="editar">
                 <img src="/assets/Vector (2).png" alt="">
             </button>
-            <button value="${department.uuid}" id="delete" >
+            <button class="${department.uuid}" id="delete" >
                 <img src="/assets/Vector (5).png" alt="">
             </button>
             </div>
@@ -115,6 +115,7 @@ function showModaltoCreate() {
         const select = document.querySelector('#selEmpresa')
     
         const listaDeEmpresas = await empresasAPI()
+       
         
         listaDeEmpresas.forEach(empresa => {
             
@@ -140,8 +141,8 @@ function closeModal() {
   }
   
   function createDepartment() {
-    const inputs = document.querySelectorAll("form > input");
-    
+    const inputs = document.querySelectorAll(".createDepartmentForm > input");
+    const sel = document.querySelector('#selEmpresa')
     const button = document.querySelector("#submitBtn");
     const modalContainer = document.querySelector("#createDepartment");
     const registerDep = {};
@@ -151,9 +152,12 @@ function closeModal() {
       event.preventDefault();
       inputs.forEach((input) => {
           registerDep[input.name] = input.value;
+
         });
-  
-      const request = await registerDepartment(registerDep);
+        registerDep.company_uuid = sel.value
+
+    
+     const request = await registerDepartment(registerDep);
       modalContainer.close();
     });
   
@@ -168,12 +172,12 @@ function showModaltoEditDep() {
     
 
     modalBtn.forEach(btn=> btn.addEventListener("click", () => {
+      console.log(modalBtn)
     modalContainer.showModal();
       
-     editarDepartamento(modalBtn.value);
-     console.log(modalBtn.value)
+     editarDepartamento();
+     
      closeModalEdit();
-   
     }))
   }
   
@@ -188,13 +192,20 @@ function closeModalEdit() {
   }
   
 function editarDepartamento() {
+
     const inputs = document.querySelectorAll("form > input");
     
     const button = document.querySelector("#submitBtn");
     const modalContainer = document.querySelector("#editDepartment");
     const editDep = {};
     
-  
+    /*
+  function renderDescription(){
+    const placeholder = document.querySelector('input>placeholder')
+
+    const description = await 
+  } */
+
     button.addEventListener("click", async (event) => {
       event.preventDefault();
       inputs.forEach((input) => {
@@ -235,8 +246,8 @@ function closeModalDelete() {
   }
   
 function deletarDepartamento() {
-    const values = [...document.querySelectorAll("button>value")]
-    console.log(values)
+    const deleta = [...document.querySelectorAll("button>class")]
+    console.log(deleta)
     const button = document.querySelector("#submitBtn");
     const modalContainer = document.querySelector("#deleteDepartment");
     const deleteDep = {};

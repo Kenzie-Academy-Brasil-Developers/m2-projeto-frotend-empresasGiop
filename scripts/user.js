@@ -87,7 +87,7 @@ async function renderDepartmentOfEmployee(){
 
   employeed.innerHTML=''
   employeed.insertAdjacentHTML('beforeend',`
-  <h1>${depOfEmployee.name} - ${depOfEmployee.name.departments}</h1>
+  <h1>${depOfEmployee.name} - ${depOfEmployee.departments}</h1>
   `)
  }
 

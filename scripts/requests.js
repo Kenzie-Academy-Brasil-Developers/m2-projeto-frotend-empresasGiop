@@ -212,12 +212,17 @@ export async function companyDepartments(companyById){
 }
 
 export async function registerDepartment (data){
+  console.log(token)
+  console.log(data)
   const registerDepartmentData = await fetch ('http://localhost:6278/departments',{
     method: "POST",
-      headers: requestHeaders,
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(data)
     })
-  
+ 
     const registerDepartmentDataJson = await registerDepartmentData.json()
   
     if (!registerDepartmentData.ok) {
@@ -226,7 +231,6 @@ export async function registerDepartment (data){
       toast("Departamento criado com sucesso", green);
     }
   
-    return registerDepartmentDataJson;
 }
 
 export async function hireEmployee (data){
