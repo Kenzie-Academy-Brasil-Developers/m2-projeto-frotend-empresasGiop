@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signupPage</title>
+    <link rel="stylesheet" href="/styles/globalStyles.css">
+    <link rel="stylesheet" href="/styles/signUp.css">
+</head>
+<body>
+    <header>
+        <div>
+            <img src="/assets/Ellipse 1.png" class="logofake" alt="">
+            <h3>Kenzie Empresas</h3>
+        </div>
+        <div>
+            <button onclick="window.location.replace('/index.html')" class="wCss homePGSignUp">Home</button>
+            <button onclick="window.location.replace('/pages/login.html')" class="bCss homePGLogin">Login</button>
+            <button class="homePGMenu">
+                <img src="/assets/Vector (1).png" alt="">
+            </button>
+        </div>
+    </header>
+    <main>
+        <img src="/assets/Rectangle 7.png" class="imgPgCdt" alt="imgPgCdt">
+        <div>
+            <h1>Cadastre-se</h1>
+            <input class="name" type="text" placeholder="Seu nome">
+            <input class="email" type="email" placeholder="Seu e-mail">
+            <input class="pass" type="password" name="Password" placeholder="Sua senha">
+            <select name="nível" id="">
+                <option value="">nível profissional</option>
+                <option value="júnior">júnior</option>
+                <option value="pleno">pleno</option>
+                <option value="sênior">sênior</option>
+            </select>
+            <button class="bCss signUpBtn">Cadastre-se</button>
+            <button onclick="history.back()" class="wCss returnBtn"> Retornar</button>
+        </div>
+    </main>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="/scripts/signUp.js"></script>
+</body>
+</html>

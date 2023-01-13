@@ -1,0 +1,65 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+:root{
+    --color-blue : #4200ff;
+    --color-white : #ffffff;
+    --color-black : #000000;
+    --color-red : #ce4646;
+    --color-green: #4ba036;
+    --color-grey-2:  #343a40;
+    --color-grey-3:  #dee2e6;
+    --color-grey-4:  #e9ecef;
+    --color-grey-5:  #f1f3f5;
+    --font-weigth-400: 400;
+    --font-weigth-700:700;
+    --border-button: 1px
+}
+
+.wCss{
+    background-color: var(--color-white);
+    color: var(--color-blue);
+    font-weight: var(--font-weigth-700);
+    border: var(--color-blue) var(--border-button) solid;
+    height: 48px;
+    width: 142px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bCss{
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    font-weight: var(--font-weigth-700);
+    border: var(--color-blue) var(--border-button) solid;
+    height: 48px;
+    width: 142px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rCss{
+    background-color: var(--color-white);
+    color: var(--color-red);
+    font-weight: var(--font-weigth-700);
+    border: var(--color-red) var(--border-button) solid;
+}
+
+.gCss{
+    background-color: var(--color-green);
+    color: var(--color-white);
+    font-weight: var(--font-weigth-700);
+    border:var(--color-green) var(--border-button) solid ;
+}
+
+.logofake{
+    height: 16px;
+    width: 16px;
+}
+
+.menuOptions, .imgClose{
+    height: 10px;
+    width: 14px;
+}

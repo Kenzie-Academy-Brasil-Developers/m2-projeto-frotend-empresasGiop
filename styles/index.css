@@ -1,0 +1,144 @@
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid var(--color-grey-3);
+}
+header > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+.homePGLogin{
+    display: none;
+}
+.homePGSignUp{
+    display: none;
+}
+.linkSignUp{
+    color: var(--color-white);
+}
+.homePGMenu{
+    width: 23px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.openMenu{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    background-color: var(--color-white);
+    width: 95vw;
+    height: 60px;
+    top: 64px;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+}
+.btnClose{
+    position: absolute;
+    top: -35px;
+    right: 22px;
+    width: 25px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main{
+    margin-top: 32px;
+}
+
+select{
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    font-weight: var(--font-weigth-400);
+    margin-left: 8px;
+    text-align: center;
+    width: 90vw;
+    height: 53px;
+
+}
+.imgFundo{
+    display: none;
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 2rem;
+}
+
+li{
+    list-style: none;
+    min-width: 240px;
+    min-height: 211px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-bottom: solid 3px var(--color-grey-3);
+
+}
+.setor{
+    color: var(--color-blue);
+    border: var(--color-blue) solid var(--border-button);
+    width: 93px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+
+@media (min-width: 768px){
+    .homePGLogin{
+        display: flex;
+    }
+    .homePGSignUp{
+        display: flex;
+    }
+    .homePGMenu{
+        display: none;
+    }
+    select{
+        margin-left: 32px;
+    }
+    .openMenu{
+        display: none;
+    }
+}
+
+@media (min-width:1440px){
+    .imgFundo{
+        display: flex;
+        height: 743px;
+        margin-left: 32px;
+    }
+   
+    main{
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        gap: 2rem;
+    }
+    aside{
+        display: flex;
+        flex-direction: column;
+
+    }
+    ul{
+        flex-direction: column;
+        height: 743px;
+        overflow-y:scroll;
+    }
+    select{
+        width: 40vw;
+        font-size: large;
+    }
+}
