@@ -1,4 +1,4 @@
-import{getUser,validateUser, empresasAPI, allDepartments,allUsers, companyDepartments,registerDepartment,editDepartment,deleteDepartment,updateEmployee,deleteUser} from "./requests.js"
+import{getUser,validateUser, empresasAPI, allDepartments,allUsers, companyDepartments,registerDepartment,editDepartment,deleteDepartment,updateEmployee,deleteUser} from "../scripts/requests.js"
 
 async function renderAdmin(){
     const user = await getUser()
@@ -6,9 +6,9 @@ async function renderAdmin(){
     const userValid = await validateUser(user.token)
     
     if(user && !userValid) {
-        window.location.replace('/index.html')
+        window.location.replace('../index.html')
     } else if (user &&!userValid.is_admin) {
-        window.location.replace('/pages/user.html')
+        window.location.replace('../pages/user.html')
     } 
 }
 

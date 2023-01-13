@@ -1,4 +1,4 @@
-import {getUser,validateUser, setoresAPI , empresasAPI,empresasPorSetor } from "./requests.js"
+import {getUser,validateUser, setoresAPI , empresasAPI,empresasPorSetor } from "../scripts/requests.js"
 
 function renderDashboards() {
     const user = getUser();
@@ -6,9 +6,9 @@ function renderDashboards() {
     const userValid = validateUser()
    
     if (user && userValid && userValid.is_admin) {
-      window.location.replace("/pages/admin.html");
+      window.location.replace("../pages/admin.html");
     } else if (user && userValid && !userValid.is_admin) {
-      window.location.replace("/pages/user.html");
+      window.location.replace("../pages/user.html");
     } 
   }
 renderDashboards()

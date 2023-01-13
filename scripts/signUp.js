@@ -1,4 +1,4 @@
-import {validateUser, signUp } from "./requests.js"
+import {validateUser, signUp } from "../scripts/requests.js"
 
 async function renderSignUp(token){
     
@@ -6,9 +6,9 @@ async function renderSignUp(token){
     
   
     if (userValid && userValid.is_admin) {
-        window.location.replace("pages/admin.html");
+        window.location.replace("../pages/admin.html");
     } else if (userValid && !userValid.is_admin) {
-        window.location.replace("pages/user.html");
+        window.location.replace("../pages/user.html");
     } 
 }
 

@@ -1,4 +1,4 @@
-import { toast } from "./toast.js";
+import { toast } from "../scripts/toast.js";
 
 export async function login(data){
   const loginData = await fetch('http://localhost:6278/auth/login',{

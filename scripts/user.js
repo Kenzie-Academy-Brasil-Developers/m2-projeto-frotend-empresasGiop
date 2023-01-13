@@ -1,13 +1,13 @@
-import {getUser,validateUser, updateData,findEmployee, departmentsOf, employeesApi} from "./requests.js"
+import {getUser,validateUser, updateData,findEmployee, departmentsOf, employeesApi} from "../scripts/requests.js"
 
 async function renderUser(){
     const user = getUser();
     const userValid = validateUser(user.token)
 
     if(user&&userValid&&userValid.is_admin){
-        window.location.replace("pages/admin.html");
+        window.location.replace("../pages/admin.html");
     } else if (!user && !userValid) {
-      window.location.replace("/index.html");
+      window.location.replace("../index.html");
     } 
   }
   

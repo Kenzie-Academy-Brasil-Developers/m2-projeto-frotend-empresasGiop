@@ -1,4 +1,4 @@
-import {login, validateUser} from "./requests.js"
+import {login, validateUser} from "../scripts/requests.js"
   
  async function loginForm() {
     const inputs = document.querySelectorAll(".email, .senha");
@@ -28,9 +28,9 @@ import {login, validateUser} from "./requests.js"
     
   
       if ( userValid && userValid.is_admin) {
-        window.location.replace("/pages/admin.html");
+        window.location.replace("../pages/admin.html");
       } else if (userValid && !userValid.is_admin) {
-        window.location.replace("/pages/user.html");
+        window.location.replace("../pages/user.html");
       } 
     }
   
