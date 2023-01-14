@@ -1,4 +1,5 @@
 import{getUser,validateUser, empresasAPI, allDepartments,allUsers, companyDepartments,registerDepartment,editDepartment,deleteDepartment,updateEmployee,deleteUser} from "../scripts/requests.js"
+import { hireEmployee,dismissEmployee } from "../scripts/requests.js"
 
 async function renderAdmin(){
     const user = await getUser()
@@ -32,30 +33,33 @@ renderizaEmpresas()
 
 async function allDepartmentsByAdmin(){
     const list = document.querySelector('#departmentsList')
-
+    
+    
     const listaDeDepartamentos = await allDepartments()
 
     listaDeDepartamentos.forEach(departamento =>{
         list.insertAdjacentHTML('beforeend',`
         <div class="dep">
         <h1>${departamento.name}</h1>
-        <p>${departamento.description}</p>
+        <p id="pDesc">${departamento.description}</p>
         <p>${departamento.companies.name}</p>
         <div class="functionsBtns">
         <button class="${departamento.uuid}" id="visualizar">
             <img src="/assets/Vector (4).png" alt="">
         </button>
-        <button class="${departamento.uuid}" id ="editar" >
+        <button class="${departamento.uuid}" value="${departamento.description}" id ="editar" >
             <img src="/assets/Vector (2).png" alt="">
         </button>
-        <button class="${departamento.uuid}" id="delete">
+        <button class="${departamento.uuid}" value="${departamento.name}" id="delete">
             <img src="/assets/Vector (5).png" alt="">
         </button>
         </div>
         </div>
         `)
+        
+        
     })
-    
+    showModalToViewDep()
     showModaltoEditDep() 
     showModaltoDelete()
 }
@@ -72,30 +76,31 @@ async function departmentByCompany(){
         const departmentsByCompany = await companyDepartments(select.value)
        
     
-       departmentsByCompany.forEach(department=>{
         list.innerHTML=''
+       departmentsByCompany.forEach(department=>{
         list.insertAdjacentHTML('beforeend',`
         <div class="depByComp">
             <h1>${department.name}</h1>
-            <p>${department.description}</p>
+            <p id="pDesc">${department.description}</p>
             <p>${department.companies.name}</p>
             <div class="functionsBtns">
             <button class="${department.uuid}" id="visualizar">
                 <img src="/assets/Vector (4).png" alt="">
             </button>
-            <button class="${department.uuid}" id="editar">
+            <button class="${department.uuid}" value="${department.description}" id="editar">
                 <img src="/assets/Vector (2).png" alt="">
             </button>
-            <button class="${department.uuid}" id="delete" >
+            <button class="${department.uuid}" value="${department.name}" id="delete" >
                 <img src="/assets/Vector (5).png" alt="">
             </button>
             </div>
             </div>
            
         `)
+        showModalToViewDep()
         showModaltoEditDep() 
         showModaltoDelete()
-     
+       
        })
     })
    
@@ -103,6 +108,106 @@ async function departmentByCompany(){
 }
 
 departmentByCompany()
+
+function showModalToViewDep() {
+  const modalBtn = [...document.querySelectorAll("#visualizar")]
+  const modalContainer = document.querySelector("#toViewDepartment");
+ 
+
+  modalBtn.forEach(btn=> btn.addEventListener("click", () => {
+      modalContainer.showModal();
+       const uid = btn.className
+      
+       renderDepToHire(uid)
+       renderUserOfDep(uid)
+       hire(uid)
+       dismiss(uid)
+       closeModalToView();
+       
+      }))
+}
+
+function closeModalToView() {
+  const closeBtn = document.querySelector("#closeModalToViewBtn");
+  const modalContainer = document.querySelector("#toViewDepartment");
+
+  closeBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    modalContainer.close();
+  });
+}
+
+async function renderDepToHire(uid){
+  
+  const divtoView = document.querySelector('#depToView')
+
+  const depart = await allDepartments()
+ 
+  depart.forEach(departamento => {
+    if(departamento.uuid==uid){
+      divtoView.innerHTML=''
+      divtoView.insertAdjacentHTML('beforeend',`
+      <h1>${departamento.name}</h1>
+      <h2>${departamento.description}</h2>
+      <p>${departamento.companies.name}</p>
+      <button class="rCss"> Desligar </button>
+      `)
+    }
+  })
+
+} 
+
+async function renderUserOfDep(uid){
+  const divDismiss = document.querySelector('#dissmissDiv')
+
+  const employees = await allUsers()
+
+  employees.forEach(employee=>{
+    if(employee.department_uuid == uid){
+      divDismiss.insertAdjacentHTML('beforeend',`
+      <h1>${employee.username}</h1>
+      <p>${employee.professional_level}</p>
+      <p>${employee.company_uuid}</p>
+      `)
+    }
+  })
+}
+
+function hire(uid) {
+ 
+  const button = document.querySelector("#submitBtnToHire");
+  const modalContainer = document.querySelector("#toViewDepartment");
+  const select = document.querySelector('#selUserToHire')
+  
+  
+  button.addEventListener("click", async (event) => {
+    event.preventDefault();
+  
+    let userId = {}
+    userId.uuid = select.value
+    
+    const request = await hireEmployee(userId.uuid , uid);
+   
+    modalContainer.close();
+  });
+}
+
+  function dismiss(uuid) {
+ 
+      const button = document.querySelector("#submitBtnDelUser");
+      const modalContainer = document.querySelector("#deleteUserDialog");
+      
+      
+    
+      button.addEventListener("click", async (event) => {
+        event.preventDefault();
+      
+        const request = await dismissEmployee(uuid);
+        modalContainer.close();
+      });
+
+  return ;
+}
 
 function showModaltoCreate() {
     const modalBtn = document.querySelector("#create");
@@ -171,11 +276,15 @@ function showModaltoEditDep() {
     const modalContainer = document.querySelector("#editDepartment");
     
 
-    modalBtn.forEach(btn=> btn.addEventListener("click", () => {
-      console.log(modalBtn)
-    modalContainer.showModal();
+    modalBtn.forEach(btn=> btn.addEventListener("click", (event) => {
+      event.preventDefault()
+      const uuid = btn.className
+      let descricao = document.getElementsByClassName('descToEdit')[0].placeholder = btn.value;
       
-     editarDepartamento();
+     
+    modalContainer.showModal();
+    
+     editarDepartamento(uuid);
      
      closeModalEdit();
     }))
@@ -187,48 +296,55 @@ function closeModalEdit() {
   
     closeBtn.addEventListener("click", (event) => {
       event.preventDefault();
+
+     
+    
       modalContainer.close();
+
     });
   }
   
-function editarDepartamento() {
-
-    const inputs = document.querySelectorAll("form > input");
+function editarDepartamento(uuid) {
+  
+    const inputs = document.querySelector(".descToEdit");
     
-    const button = document.querySelector("#submitBtn");
+    const button = document.querySelector("#submitBtnEdit");
     const modalContainer = document.querySelector("#editDepartment");
     const editDep = {};
     
-    /*
-  function renderDescription(){
-    const placeholder = document.querySelector('input>placeholder')
-
-    const description = await 
-  } */
+    
+  
 
     button.addEventListener("click", async (event) => {
       event.preventDefault();
-      inputs.forEach((input) => {
-          editDep[input.name] = input.value;
-        });
+      
+          editDep[inputs.name] = inputs.value
+          
+        console.log(editDep)
+
+        
+         
+       
   
-      const request = await editDepartment(editDep);
+      const request = await editDepartment(editDep , uuid);
+     
       modalContainer.close();
     });
   
     return editDep;
   }
 
-
-
 function showModaltoDelete() {
     const modalBtn = [...document.querySelectorAll("#delete")]
     const modalContainer = document.querySelector("#deleteDepartment");
+    let span = document.querySelector('.dD')
   
     modalBtn.forEach(btn=> btn.addEventListener("click", () => {
         modalContainer.showModal();
-          
-         deletarDepartamento();
+          let uuid = btn.className
+         span.innerHTML = btn.value 
+      
+         deletarDepartamento(uuid);
          
          closeModalDelete();
          
@@ -245,52 +361,56 @@ function closeModalDelete() {
     });
   }
   
-function deletarDepartamento() {
-    const deleta = [...document.querySelectorAll("button>class")]
-    console.log(deleta)
-    const button = document.querySelector("#submitBtn");
+function deletarDepartamento(uuid) {
+    const button = document.querySelector("#submitBtnToDel");
     const modalContainer = document.querySelector("#deleteDepartment");
-    const deleteDep = {};
     
-  
     button.addEventListener("click", async (event) => {
       event.preventDefault();
-      inputs.forEach((input) => {
-          deleteDep[input.name] = input.value;
-        });
-  
-      const request = await deleteDepartment(deleteDep);
+     
+      
+      const request = await deleteDepartment(uuid);
       modalContainer.close();
     });
   
-    return deleteDep;
+    return 
   }
 
 async function allUserByAdmin(){
     const list = document.querySelector('#usersSignedsList')
+    const listTwo = document.querySelector('#selUserToHire')
 
     const listaDeUsuarios = await allUsers()
 
     listaDeUsuarios.forEach(usuario=>{
+      if(usuario.username=="ADMIN"){ 
+      }else{
         list.insertAdjacentHTML('beforeend',`
         <div class="users">
         <h1>${usuario.username}</h1>
-    <p>${usuario.kind_of_work}</p>
-    <p>${usuario.deparment_uuid}</p>
+    <p>${usuario.professional_level}</p>
+    <p>${usuario.company_uuid}</p>
     <div class="functionsBtns">
-    <button id="editUserBtn">
+    <button id="editUserBtn" class="${usuario.uuid}">
         <img src="/assets/Vector (2).png" alt="">
     </button>
-    <button id="deleteUser">
+    <button id="deleteUser" value="${usuario.username}" class="${usuario.uuid}" >
         <img src="/assets/Vector (5).png" alt="">
     </button>
     </div>
     </div>
         `)
+        if(usuario.department_uuid==null){
+          listTwo.insertAdjacentHTML('beforeend',`
+          <option value="${usuario.uuid}" > ${usuario.username}</option>
+          `)
+        }
+          
+      }
        
-        showModaltoEditUser()
-        showModaltoDeleteUser()
-    })
+      })
+      showModaltoEditUser()
+      showModaltoDeleteUser()
 }
 
 allUserByAdmin()
@@ -300,11 +420,12 @@ function showModaltoEditUser() {
   const modalContainer = document.querySelector("#editUser");
   
 
-  modalBtn.forEach(btn=> btn.addEventListener("click", () => {
+  modalBtn.forEach(btn=> btn.addEventListener("click", (event) => {
+    event.preventDefault()
   modalContainer.showModal();
-    
-   editarUsuario(modalBtn.value);
-   console.log(modalBtn.value)
+    const uuid = btn.className
+   editarUsuario(uuid);
+   
    closeModalEditUser();
  
   }))
@@ -320,21 +441,21 @@ function closeModalEditUser() {
   });
 }
 
-function editarUsuario() {
-  const inputs = document.querySelectorAll("form > input");
+function editarUsuario(uuid) {
+  const selKind = document.querySelector('#selKind')
+  const selProf = document.querySelector('#selProf')
   
-  const button = document.querySelector("#submitBtn");
+  const button = document.querySelector("#submitBtnEditUser");
   const modalContainer = document.querySelector("#editUser");
   const editUser = {};
   
 
   button.addEventListener("click", async (event) => {
     event.preventDefault();
-    inputs.forEach((input) => {
-        editUser[input.name] = input.value;
-      });
+    editUser.kind_of_work = selKind.value
+    editUser.professional_level = selProf.value
 
-    const request = await updateEmployee(editUser);
+    const request = await updateEmployee(editUser,uuid);
     modalContainer.close();
   });
 
@@ -344,11 +465,14 @@ function editarUsuario() {
 function showModaltoDeleteUser() {
   const modalBtn = [...document.querySelectorAll("#deleteUser")]
   const modalContainer = document.querySelector("#deleteUserDialog");
+  let span = document.querySelector('.dU')
 
   modalBtn.forEach(btn=> btn.addEventListener("click", () => {
       modalContainer.showModal();
-        
-       deletarUser();
+       const uuid = btn.className
+       const userName = btn.value
+       span.innerHTML = userName
+       deletarUser(uuid);
        
        closeModalDeleteUser();
        
@@ -365,21 +489,21 @@ function closeModalDeleteUser() {
   });
 }
 
-function deletarUser() {
+function deletarUser(uuid) {
  
-  const button = document.querySelector("#submitBtn");
+  const button = document.querySelector("#submitBtnDelUser");
   const modalContainer = document.querySelector("#deleteUserDialog");
-  const deleteDep = {};
+  
   
 
   button.addEventListener("click", async (event) => {
     event.preventDefault();
   
-    const request = await deleteUser(deleteDep);
+    const request = await deleteUser(uuid);
     modalContainer.close();
   });
 
-  return deleteDep;
+  return ;
 }
 
 

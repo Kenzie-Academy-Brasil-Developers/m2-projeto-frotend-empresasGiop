@@ -17,7 +17,7 @@ async function renderUser(){
     const divData = document.querySelector('.data')
   
     const employee = await findEmployee()
-    
+   
       divData.insertAdjacentHTML('beforeend', `
       <div>
       <div>

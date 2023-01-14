@@ -233,11 +233,11 @@ export async function registerDepartment (data){
   
 }
 
-export async function hireEmployee (data){
+export async function hireEmployee (usuarioById, departamentoById){
   const hireEmployeeData = await fetch ('http://localhost:6278/departments/hire/',{
   method: "PATCH",
     headers: requestHeaders,
-    body: JSON.stringify(data)
+    body: JSON.stringify(usuarioById,departamentoById)
   })
 
   const hireEmployeeDataJson = await hireEmployeeData.json()
@@ -267,14 +267,16 @@ export async function dismissEmployee(funcionarioById){
   return dismissEmployeeDataJson
 }
 
-export async function editDepartment(departamentoById){
+export async function editDepartment(data,departamentoById){
+ 
   const editDepartment = await fetch (`http://localhost:6278/departments/${departamentoById}`,{
     method: "PATCH",
-      headers:requestHeaders
+      headers:requestHeaders,
+      body: JSON.stringify(data)
   })
 
   const editDepartmentJson = await editDepartment.json()
-
+ 
   if(!editDepartment.ok){
     toast(editDepartmentJson.message,red);
   } else {
@@ -284,20 +286,20 @@ export async function editDepartment(departamentoById){
 }
 
 export async function deleteDepartment(departamentoById) {
-  const department = await fetch(`http://localhost:6278/departments/dismiss/${departamentoById}`, {
+  const department = await fetch(`http://localhost:6278/departments/${departamentoById}`, {
     method: "DELETE",
     headers: requestHeaders,
   });
 
-  const departmentJson = await department.json();
+  //const departmentJson = await department.json();
 
   if (!department.ok) {
-    toast(departmentJson.message, red);
+    toast("Departamento não deletado", red);
   } else {
     toast("Departamento deletado", green);
   }
 
-  return departmentJson;
+
 }
 
 export async function allUsers (){
@@ -340,21 +342,19 @@ export async function updateEmployee (data, employeeById){
   return updateEmployeeDataJson;
 }
 
-export async function deleteUser() {
+export async function deleteUser(usuarioById) {
   const deleteUser = await fetch(`http://localhost:6278/admin/delete_user/${usuarioById}`, {
     method: "DELETE",
     headers: requestHeaders,
   });
 
-  const deleteUserJson = await deleteUser.json();
-
   if (!deleteUser.ok) {
-    toast(deleteUserJson.message, red);
+    toast("Perfil não deletado", red);
   } else {
     toast("Perfil deletado", green);
   }
 
-  return deleteUserJson;
+ return
 }
 
 

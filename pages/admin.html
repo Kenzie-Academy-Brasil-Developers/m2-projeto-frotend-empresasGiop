@@ -36,7 +36,25 @@
             </div>
         </div>
     </main>
-    <dialog id="showDeparment">
+    <dialog id="toViewDepartment">
+        <button type="submit" id="closeModalToViewBtn">
+            <img src="../assets/Vector (3).png" alt="">
+        </button>
+        <h1></h1>
+        <form>
+            <div id="depToView">
+                
+            </div>
+            <div>
+                <select name="" id="selUserToHire">
+                    <option value="">Usuário</option>
+                </select>
+                <button type="submit" class="gCss" id="submitBtnToHire">Contratar</button>
+            </div>
+            <div id="dissmissDiv">
+                
+            </div>
+        </form>
 
 
     </dialog>
@@ -60,8 +78,8 @@
             <img src="../assets/Vector (3).png" alt="">
         </button>
         <form>
-            <input type="text" name="description" placeholder=`${description}`>
-            <button type="submit" id="#submitBtn" >Salvar Alterações</button>
+            <input class="descToEdit" type="text" name="description" placeholder="">
+            <button type="submit" id="submitBtnEdit" >Salvar Alterações</button>
         </form>
     </dialog>
 
@@ -69,8 +87,8 @@
         <button id="closeModalDel">
             <img src="../assets/Vector (3).png" alt="">
         </button>
-       <h2>Realmente deseja deletar o Departamento `${departamento.name}` e demitir seus funcionários?</h2>
-       <button type="submit" class="gCss">
+       <h2>Realmente deseja deletar o Departamento <span class="dD"></span> e demitir seus funcionários?</h2>
+       <button type="submit" id="submitBtnToDel" class="gCss">
         <p>Confirmar</p>
        </button>
     </dialog>
@@ -80,18 +98,20 @@
             <img src="../assets/Vector (3).png" alt="">
         </button>
         <form>
-            <select name="" id="">
+            <select name="kind_of_work" id="selKind">
                 <option value="">Selecionar modalidade de trabalho</option>
                 <option value="home office">Home office</option>
                 <option value="hibrido">Hibrido</option>
                 <option value="presencial">Presencial</option>
             </select>
-            <select name="" id="">
+            <select name="professional_level" id="selProf">
                 <option value="">nível profissional</option>
+                <option value="estágio">estágio</option>
                 <option value="júnior">júnior</option>
                 <option value="pleno">pleno</option>
                 <option value="sênior">sênior</option>
             </select>
+            <button type="submit" class="bCss" id="submitBtnEditUser">Editar</button>
         </form>
     </dialog>
 
@@ -99,8 +119,8 @@
         <button id="closeModalDeleteUser">
             <img src="../assets/Vector (3).png" alt="">
         </button>
-        <h2>Realmente deseja remover o usuário `${usuario.name}`?</h2>
-        <button type="submit" class="gCss">Deletar</button>
+        <h2>Realmente deseja remover o usuário <span class="dU"></span> ?</h2>
+        <button type="submit" class="gCss" id="submitBtnDelUser">Deletar</button>
     </dialog>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
