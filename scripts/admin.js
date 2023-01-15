@@ -1,5 +1,5 @@
 import{getUser,validateUser, empresasAPI, allDepartments,allUsers, companyDepartments,registerDepartment,editDepartment,deleteDepartment,updateEmployee,deleteUser} from "../scripts/requests.js"
-import { hireEmployee,dismissEmployee } from "../scripts/requests.js"
+import { hireEmployee,dismissEmployee,usersOut } from "../scripts/requests.js"
 
 async function renderAdmin(){
     const user = await getUser()
@@ -34,7 +34,6 @@ renderizaEmpresas()
 async function allDepartmentsByAdmin(){
     const list = document.querySelector('#departmentsList')
     
-    
     const listaDeDepartamentos = await allDepartments()
 
     listaDeDepartamentos.forEach(departamento =>{
@@ -57,7 +56,6 @@ async function allDepartmentsByAdmin(){
         </div>
         `)
         
-        
     })
     showModalToViewDep()
     showModaltoEditDep() 
@@ -72,10 +70,8 @@ async function departmentByCompany(){
 
     select.addEventListener('click', async (event) =>{
        
-        
         const departmentsByCompany = await companyDepartments(select.value)
        
-    
         list.innerHTML=''
        departmentsByCompany.forEach(department=>{
         list.insertAdjacentHTML('beforeend',`
@@ -103,8 +99,6 @@ async function departmentByCompany(){
        
        })
     })
-   
-
 }
 
 departmentByCompany()
@@ -118,6 +112,7 @@ function showModalToViewDep() {
       modalContainer.showModal();
        const uid = btn.className
       
+       renderusersOutOfWork()
        renderDepToHire(uid)
        renderUserOfDep(uid)
        hire(uid)
@@ -137,6 +132,18 @@ function closeModalToView() {
   });
 }
 
+async function renderusersOutOfWork () {
+  const listOut = document.querySelector('#selUserToHire')
+
+  const users = await usersOut()
+
+  users.forEach(user =>{
+    listOut.insertAdjacentHTML('beforeend',`
+    <option value="${user.uuid}" > ${user.username}</option>
+    `)
+  })
+}
+
 async function renderDepToHire(uid){
   
   const divtoView = document.querySelector('#depToView')
@@ -150,9 +157,8 @@ async function renderDepToHire(uid){
       <h1>${departamento.name}</h1>
       <h2>${departamento.description}</h2>
       <p>${departamento.companies.name}</p>
-      <button class="rCss"> Desligar </button>
       `)
-    }
+    } 
   })
 
 } 
@@ -162,14 +168,17 @@ async function renderUserOfDep(uid){
 
   const employees = await allUsers()
 
+  divDismiss.innerHTML=''
   employees.forEach(employee=>{
     if(employee.department_uuid == uid){
+      
       divDismiss.insertAdjacentHTML('beforeend',`
       <h1>${employee.username}</h1>
       <p>${employee.professional_level}</p>
       <p>${employee.company_uuid}</p>
+      <button class="rCss"> Desligar </button>
       `)
-    }
+    } 
   })
 }
 
@@ -192,17 +201,15 @@ function hire(uid) {
   });
 }
 
-  function dismiss(uuid) {
+  function dismiss() {
  
       const button = document.querySelector("#submitBtnDelUser");
       const modalContainer = document.querySelector("#deleteUserDialog");
       
-      
-    
       button.addEventListener("click", async (event) => {
         event.preventDefault();
       
-        const request = await dismissEmployee(uuid);
+        const request = await dismissEmployee();
         modalContainer.close();
       });
 
@@ -378,7 +385,6 @@ function deletarDepartamento(uuid) {
 
 async function allUserByAdmin(){
     const list = document.querySelector('#usersSignedsList')
-    const listTwo = document.querySelector('#selUserToHire')
 
     const listaDeUsuarios = await allUsers()
 
@@ -400,11 +406,7 @@ async function allUserByAdmin(){
     </div>
     </div>
         `)
-        if(usuario.department_uuid==null){
-          listTwo.insertAdjacentHTML('beforeend',`
-          <option value="${usuario.uuid}" > ${usuario.username}</option>
-          `)
-        }
+       
           
       }
        
@@ -505,8 +507,6 @@ function deletarUser(uuid) {
 
   return ;
 }
-
-
 
 function logout() {
     const logoutBtn = document.querySelector('#logoutBtn')
