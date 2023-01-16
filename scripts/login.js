@@ -26,25 +26,25 @@ import {login, validateUser} from "../scripts/requests.js"
     
     const userValid = await validateUser(token)
     
-  
-      if ( userValid && userValid.is_admin) {
+      if(!userValid){
+        window.location.replace("../pages/login.html")
+      }else if ( userValid.is_admin) {
         window.location.replace("../pages/admin.html");
       } else if (userValid && !userValid.is_admin) {
         window.location.replace("../pages/user.html");
-      } 
     }
+  }
   
   
 
   function renderModalMenu (){
     const buttonMenu = document.querySelector('.menu')
-    const body = document.querySelector('body')
+    const modalContainer = document.querySelector('#dLg')
 
     buttonMenu.addEventListener('click', (event) => {
+        event.preventDefault()
         
-        const modal = createModal()
-        
-        body.appendChild(modal) 
+        modalContainer.showModal()
         closeModal()
     })
    
@@ -53,39 +53,13 @@ import {login, validateUser} from "../scripts/requests.js"
 renderModalMenu()
 
 function createModal(){
-    const modalContainer = document.createElement('dialog')
-    const loginBtn = document.createElement('button')
-    const signUpBtn = document.createElement('button')
-    const imgClose = document.createElement('img')
-    const buttonClose = document.createElement('button')
-    const linkLogin = document.createElement('a')
-    const linkHome = document.createElement('a')
-
-    linkLogin.href = "/pages/login.html"
-    linkHome.href="/index.html"
-
-    linkLogin.innerText = "Login"
-    linkHome.innerText = "Home"
-    imgClose.src = "/assets/Vector (3).png"
-
-    loginBtn.classList.add('wCss', "loginModal")
-    signUpBtn.classList.add('bCss')
-    imgClose.classList.add('imgClose')
-    linkHome.classList.add('linkHome')
-    buttonClose.id = 'btnClose'
-    modalContainer.classList.add('openMenu')
-
+    const modalContainer = document.querySelector('#dLg')
    
-    loginBtn.appendChild(linkLogin)
-    signUpBtn.appendChild(linkHome)
-    buttonClose.appendChild(imgClose)
-    modalContainer.append(buttonClose,loginBtn,signUpBtn)
-    
     return modalContainer
 }
 
 function closeModal (){
-    const buttonClose = document.querySelector('#btnClose')
+    const buttonClose = document.querySelector('.closeBtnLgPg')
 
     buttonClose.addEventListener('click', () =>{
         const create = createModal()

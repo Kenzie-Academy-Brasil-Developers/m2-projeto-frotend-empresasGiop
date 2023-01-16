@@ -4,7 +4,7 @@ async function renderUser(){
     const user = getUser();
     const userValid = validateUser(user.token)
 
-    if(user&&userValid&&userValid.is_admin){
+    if(user&&userValid.is_admin){
         window.location.replace("../pages/admin.html");
     } else if (!user && !userValid) {
       window.location.replace("../index.html");
@@ -17,7 +17,14 @@ async function renderUser(){
     const divData = document.querySelector('.data')
   
     const employee = await findEmployee()
-   
+    
+    if(employee.kind_of_work ==null){
+      employee.kind_of_work = 'não especificado'
+    }
+    if(employee.professional_level ==null){
+      employee.professional_level ='não especificado'
+    }
+
       divData.insertAdjacentHTML('beforeend', `
       <div>
       <div>
@@ -32,9 +39,10 @@ async function renderUser(){
           </button>
       </div>
       </div>
-      `)
+      `
+      )
       showModal() 
-
+     
   }
 
   renderEmployee()
@@ -84,11 +92,17 @@ async function renderDepartmentOfEmployee(){
   const employeed = document.querySelector('.employeed')
 
   const depOfEmployee = await departmentsOf()
+  
+  const depName = depOfEmployee.departments.find(name => name)
 
-  employeed.innerHTML=''
-  employeed.insertAdjacentHTML('beforeend',`
-  <h1>${depOfEmployee.name} - ${depOfEmployee.departments}</h1>
-  `)
+    employeed.innerHTML=''
+    employeed.insertAdjacentHTML('beforeend',`
+    <div class="depStyle">
+    <h1>${depOfEmployee.name}</h1>
+    <h1>${depName.name}</h1>
+    </div>
+    `)
+  
  }
 
  renderDepartmentOfEmployee()
@@ -96,17 +110,24 @@ async function renderDepartmentOfEmployee(){
 async function renderCoWorkers(){
   const coWorkers = document.querySelector('.coWorkers')
 
-  const listCoWorkers = await employeesApi()
+  let listCoWorkers = await employeesApi()
 
-  listCoWorkers.forEach(coWork=>{
+  let lc = listCoWorkers.find(users=>users)
+    lc.users.forEach(username=>{
+      console.log(username)
     coWorkers.insertAdjacentHTML('beforeend',`
-            <h3>${coWork.username}</h3>
-            <p>${coWork.professional_level}</p>
+    <div class="foiDificil">
+    <p>${username.username}</p>
+    <p>${username.professional_level}</p>
+    </div>
     `)
-
   })
-}
-renderCoWorkers()
+  
+ 
+  
+
+}  renderCoWorkers()
+
 
 function logout() {
     const logoutBtn = document.querySelector('#logoutBtn')

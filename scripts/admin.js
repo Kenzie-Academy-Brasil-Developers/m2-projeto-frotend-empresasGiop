@@ -69,6 +69,7 @@ async function departmentByCompany(){
     const select = document.querySelector('#selectEmpresa' )
 
     select.addEventListener('click', async (event) =>{
+      event.preventDefault()
        
         const departmentsByCompany = await companyDepartments(select.value)
        
@@ -108,7 +109,8 @@ function showModalToViewDep() {
   const modalContainer = document.querySelector("#toViewDepartment");
  
 
-  modalBtn.forEach(btn=> btn.addEventListener("click", () => {
+  modalBtn.forEach(btn=> btn.addEventListener("click", (event) => {
+    event.preventDefault()
       modalContainer.showModal();
        const uid = btn.className
       
@@ -138,6 +140,7 @@ async function renderusersOutOfWork () {
   const users = await usersOut()
 
   users.forEach(user =>{
+    listOut.innerHTML=''
     listOut.insertAdjacentHTML('beforeend',`
     <option value="${user.uuid}" > ${user.username}</option>
     `)
@@ -154,9 +157,11 @@ async function renderDepToHire(uid){
     if(departamento.uuid==uid){
       divtoView.innerHTML=''
       divtoView.insertAdjacentHTML('beforeend',`
+      <div id="d1">
       <h1>${departamento.name}</h1>
       <h2>${departamento.description}</h2>
       <p>${departamento.companies.name}</p>
+      </div>
       `)
     } 
   })
@@ -173,10 +178,11 @@ async function renderUserOfDep(uid){
     if(employee.department_uuid == uid){
       
       divDismiss.insertAdjacentHTML('beforeend',`
+      <div id="d2">
       <h1>${employee.username}</h1>
       <p>${employee.professional_level}</p>
-      <p>${employee.company_uuid}</p>
-      <button class="rCss"> Desligar </button>
+      <button value="${employee.uuid}" id="desBtn" class="rCss"> Desligar </button>
+      </div>
       `)
     } 
   })
@@ -188,31 +194,33 @@ function hire(uid) {
   const modalContainer = document.querySelector("#toViewDepartment");
   const select = document.querySelector('#selUserToHire')
   
-  
+ 
   button.addEventListener("click", async (event) => {
     event.preventDefault();
   
     let userId = {}
-    userId.uuid = select.value
+    userId.user_uuid = select.value
+    userId.department_uuid =uid
+    const request = await hireEmployee(userId);
     
-    const request = await hireEmployee(userId.uuid , uid);
-   
-    modalContainer.close();
   });
 }
 
   function dismiss() {
  
-      const button = document.querySelector("#submitBtnDelUser");
-      const modalContainer = document.querySelector("#deleteUserDialog");
+      const button = [...document.querySelectorAll("#desBtn")]
       
-      button.addEventListener("click", async (event) => {
+      button.forEach(btn=>btn.addEventListener("click", async (event) => {
         event.preventDefault();
+        
+        let userId ={}
+        console.log(btn.value)
+        userId.uuid = btn.value
       
-        const request = await dismissEmployee();
-        modalContainer.close();
-      });
-
+        const request = await dismissEmployee(userId);
+       
+      }))
+    
   return ;
 }
 
@@ -220,7 +228,8 @@ function showModaltoCreate() {
     const modalBtn = document.querySelector("#create");
     const modalContainer = document.querySelector("#createDepartment");
   
-    modalBtn.addEventListener("click", () => {
+    modalBtn.addEventListener("click", (event) => {
+      event.preventDefault()
       modalContainer.showModal();
       createDepartment();
       async function renderizaEmpresas() {
@@ -243,7 +252,7 @@ function showModaltoCreate() {
   }
   
 function closeModal() {
-    const closeBtn = document.querySelector("#closeModal");
+    const closeBtn = document.querySelector("#closeModalC");
     const modalContainer = document.querySelector("#createDepartment");
   
     closeBtn.addEventListener("click", (event) => {
@@ -255,7 +264,7 @@ function closeModal() {
   function createDepartment() {
     const inputs = document.querySelectorAll(".createDepartmentForm > input");
     const sel = document.querySelector('#selEmpresa')
-    const button = document.querySelector("#submitBtn");
+    const button = document.querySelector("#submitBtnC");
     const modalContainer = document.querySelector("#createDepartment");
     const registerDep = {};
     
@@ -319,9 +328,6 @@ function editarDepartamento(uuid) {
     const modalContainer = document.querySelector("#editDepartment");
     const editDep = {};
     
-    
-  
-
     button.addEventListener("click", async (event) => {
       event.preventDefault();
       
@@ -329,10 +335,6 @@ function editarDepartamento(uuid) {
           
         console.log(editDep)
 
-        
-         
-       
-  
       const request = await editDepartment(editDep , uuid);
      
       modalContainer.close();
@@ -374,8 +376,7 @@ function deletarDepartamento(uuid) {
     
     button.addEventListener("click", async (event) => {
       event.preventDefault();
-     
-      
+    
       const request = await deleteDepartment(uuid);
       modalContainer.close();
     });
@@ -406,8 +407,6 @@ async function allUserByAdmin(){
     </div>
     </div>
         `)
-       
-          
       }
        
       })
@@ -421,7 +420,6 @@ function showModaltoEditUser() {
   const modalBtn = [...document.querySelectorAll("#editUserBtn")]
   const modalContainer = document.querySelector("#editUser");
   
-
   modalBtn.forEach(btn=> btn.addEventListener("click", (event) => {
     event.preventDefault()
   modalContainer.showModal();
@@ -469,7 +467,8 @@ function showModaltoDeleteUser() {
   const modalContainer = document.querySelector("#deleteUserDialog");
   let span = document.querySelector('.dU')
 
-  modalBtn.forEach(btn=> btn.addEventListener("click", () => {
+  modalBtn.forEach(btn=> btn.addEventListener("click", (event) => {
+    event.preventDefault()
       modalContainer.showModal();
        const uuid = btn.className
        const userName = btn.value
@@ -511,7 +510,8 @@ function deletarUser(uuid) {
 function logout() {
     const logoutBtn = document.querySelector('#logoutBtn')
   
-    logoutBtn.addEventListener('click', () => {
+    logoutBtn.addEventListener('click', (event) => {
+      event.preventDefault()
       localStorage.clear()
       window.location.replace('/')
     })

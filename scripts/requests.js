@@ -14,19 +14,13 @@ export async function login(data){
 
   if (!loginData.ok) {
     toast(loginDataJson.message, red);
+    window.location.replace("../pages/login.html")
   } else {
     toast("Login realizado com sucesso", green);
-    const user = getUser();
-    const userValid = validateUser()
     
-      if (user && userValid && userValid.is_admin) {
-        window.location.replace("/pages/admin.html");
-      } else if (user && userValid && !userValid.is_admin) {
-        window.location.replace("/pages/user.html");
-      } 
+      return loginDataJson;
   }
 
-  return loginDataJson;
 }
 const user = getUser() || {};
 const { token } = user;
@@ -149,7 +143,7 @@ export async function departmentsOf (){
 
   const departmentsOfJson = await departmentsOf.json()
   
-   return departmentsOfJson
+  return departmentsOfJson
 } 
 
 export async function updateData (data){
@@ -165,7 +159,6 @@ export async function updateData (data){
     toast(updateDataJson.message, red);
   } else {
     toast("Usuário atualizado com sucesso", green);
-    window.location.replace("/pages/login.html");
   }
 
   return updateDataJson;
@@ -233,11 +226,11 @@ export async function registerDepartment (data){
   
 }
 
-export async function hireEmployee (usuarioById, departamentoById){
+export async function hireEmployee (data){
   const hireEmployeeData = await fetch ('http://localhost:6278/departments/hire/',{
   method: "PATCH",
     headers: requestHeaders,
-    body: JSON.stringify(usuarioById,departamentoById)
+    body: JSON.stringify(data)
   })
 
   const hireEmployeeDataJson = await hireEmployeeData.json()

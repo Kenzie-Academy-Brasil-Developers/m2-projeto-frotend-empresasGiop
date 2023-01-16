@@ -43,14 +43,61 @@ main{
 .employeed{
     border: solid 1px var(--color-grey-3);
     width: 1180px;
+}
+.coWorkers{
+    border: solid 1px var(--color-grey-3);
+    width: 1180px;
     height: 467px;
     margin: 8px;
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    flex: 1;
+    gap: 2rem;
 }
-dialog{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--color-grey-3);
-    opacity: 0.85;
+.foiDificil{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: solid 1px var(--color-blue);
+    gap: 1rem;
+
+}
+.foiDificil:hover{
+    border: solid 1px green;
+}
+.depStyle{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-blue);
+    color: white;
+    justify-content: space-around;
+    align-items: center;
+}
+#edU{
+    height: 421px;
+    width: 506px;
+    align-items: center;
+    border-radius: 0px;
+    border: none;
+    position: relative;
+ }
+#closeModal{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+#edU>form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+
+#edU>form>input{
+    width: 22vw;
+    height: 24px;
 }

@@ -31,9 +31,18 @@
             <input class="senha" type="password" name="password" placeholder="Sua senha">
             <button class="bCss loginBtn" type="submit">Login</button>
             <p>ou</p>
-            <button class="wCss signUpBtn"><a href="../pages/signUp.html" >Cadastro</a></button>
+            <button class="wCss signUpBtn" onclick="window.location.replace('../pages/signUp.html') " >Cadastro</button>
         </div>
     </main>
+    <dialog id="dLg">
+        <button type="submit" class="closeBtnLgPg">
+            <img src="../assets/Vector (3).png" alt="">
+        </button>
+        <div>
+            <button type="submit" class="wCss" onclick="window.location.replace('../index.html') " >Home</button>
+            <button type="submit" class="bCss" onclick="window.location.replace('../pages/signUp.html') ">Cadastro</button>
+        </div>
+    </dialog>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script type="module" src="../scripts/login.js"></script>
 </body>

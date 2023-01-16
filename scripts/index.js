@@ -87,13 +87,12 @@ renderizaEmpresasPorSetor()
 
 function renderModalMenu (){
     const buttonMenu = document.querySelector('.homePGMenu')
-    const body = document.querySelector('body')
+    const modalContainer = document.querySelector('#hLg')
 
     buttonMenu.addEventListener('click', (event) => {
+        event.preventDefault()
         
-        const modal = createModal()
-        
-        body.appendChild(modal) 
+        modalContainer.showModal()
         closeModal()
     })
    
@@ -102,39 +101,13 @@ function renderModalMenu (){
 renderModalMenu()
 
 function createModal(){
-    const modalContainer = document.createElement('dialog')
-    const loginBtn = document.createElement('button')
-    const signUpBtn = document.createElement('button')
-    const imgClose = document.createElement('img')
-    const buttonClose = document.createElement('button')
-    const linkLogin = document.createElement('a')
-    const linkSignUp = document.createElement('a')
-
-    linkLogin.href = "/pages/login.html"
-    linkSignUp.href="/pages/signUp.html"
-
-    linkLogin.innerText = "Login"
-    linkSignUp.innerText = "Cadastro"
-    imgClose.src = "/assets/Vector (3).png"
-
-    loginBtn.classList.add('wCss', "loginModal")
-    signUpBtn.classList.add('bCss')
-    imgClose.classList.add('imgClose')
-    linkSignUp.classList.add('linkSignUp')
-    buttonClose.classList.add('btnClose')
-    modalContainer.classList.add('openMenu')
-
+    const modalContainer = document.querySelector('#hLg')
    
-    loginBtn.appendChild(linkLogin)
-    signUpBtn.appendChild(linkSignUp)
-    buttonClose.appendChild(imgClose)
-    modalContainer.append(buttonClose,loginBtn,signUpBtn)
-    
     return modalContainer
 }
 
 function closeModal (){
-    const buttonClose = document.querySelector('.btnClose')
+    const buttonClose = document.querySelector('.closeBtnHPg')
 
     buttonClose.addEventListener('click', () =>{
         const create = createModal()

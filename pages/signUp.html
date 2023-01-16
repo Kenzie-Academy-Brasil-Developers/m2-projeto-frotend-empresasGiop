@@ -26,11 +26,12 @@
         <img src="../assets/Rectangle 7.png" class="imgPgCdt" alt="imgPgCdt">
         <div>
             <h1>Cadastre-se</h1>
-            <input class="name" type="text" placeholder="Seu nome">
-            <input class="email" type="email" placeholder="Seu e-mail">
-            <input class="pass" type="password" name="Password" placeholder="Sua senha">
-            <select name="nível" id="">
+            <input id="inSU" type="text" name="username" placeholder="Seu nome">
+            <input id="inSU" type="password" name="password" placeholder="Sua senha">
+            <input id="inSU" type="email" name="email" placeholder="Seu e-mail">
+            <select name="professional_level" id="profLvlSel">
                 <option value="">nível profissional</option>
+                <option value="estágio">estágio</option>
                 <option value="júnior">júnior</option>
                 <option value="pleno">pleno</option>
                 <option value="sênior">sênior</option>
@@ -39,6 +40,15 @@
             <button onclick="history.back()" class="wCss returnBtn"> Retornar</button>
         </div>
     </main>
+    <dialog id="dSg">
+        <button type="submit" class="closeBtnSGPg">
+            <img src="../assets/Vector (3).png" alt="">
+        </button>
+        <div>
+            <button type="submit" class="wCss" onclick="window.location.replace('../index.html') " >Home</button>
+            <button type="submit" class="bCss" onclick="window.location.replace('../pages/login.html') ">Cadastro</button>
+        </div>
+    </dialog>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script type="module" src="../scripts/signUp.js"></script>
 </body>

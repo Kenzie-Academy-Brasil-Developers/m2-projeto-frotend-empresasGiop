@@ -11,7 +11,7 @@
 <body>
     <header>
         <div>
-            <img src="/assets/Ellipse 1.png"  class="logofake"alt="">
+            <img src="../assets/Ellipse 1.png"  class="logofake"alt="">
             <h3>Kenzie Empresas</h3>
         </div>
         <button class="wCss" id="logoutBtn">Logout</button>
@@ -40,17 +40,18 @@
         <button type="submit" id="closeModalToViewBtn">
             <img src="../assets/Vector (3).png" alt="">
         </button>
-        <h1></h1>
-        <form>
-            <div id="depToView">
-                
-            </div>
-            <div>
-                <select name="" id="selUserToHire">
-                    <option value="">Usuário</option>
-                </select>
-                <button type="submit" class="gCss" id="submitBtnToHire">Contratar</button>
-            </div>
+        <div id="d3">
+            <form>
+                <div id="depToView">
+                    
+                </div>
+                <div>
+                    <select name="" id="selUserToHire">
+                        <option value="">Usuário</option>
+                    </select>
+                    <button type="submit" class="gCss" id="submitBtnToHire">Contratar</button>
+                </div>
+        </div>
             <div id="dissmissDiv">
                 
             </div>
@@ -60,7 +61,7 @@
     </dialog>
     <dialog id="createDepartment">
         <form class="createDepartmentForm">
-            <button id="closeModal">
+            <button id="closeModalC">
                 <img src="../assets/Vector (3).png" alt="">
             </button>
             <h2>Criar Departamento</h2>
@@ -69,58 +70,67 @@
             <select name="company_uuid" id="selEmpresa">
                 <option value="selecionar empresa">selecionar empresa</option>
             </select>
-            <button class="bCss" type="submit" id="submitBtn" >Criar o departamento</button>
+            <button class="bCss" type="submit" id="submitBtnC" >Criar o departamento</button>
         </form>
     </dialog>
 
     <dialog id="editDepartment">
-        <button id="closeModalEdit">
-            <img src="../assets/Vector (3).png" alt="">
-        </button>
-        <form>
-            <input class="descToEdit" type="text" name="description" placeholder="">
-            <button type="submit" id="submitBtnEdit" >Salvar Alterações</button>
-        </form>
+        <div id="editDepartmentDiv">
+            <button id="closeModalEdit">
+                <img src="../assets/Vector (3).png" alt="">
+            </button>
+            <form>
+                <h1>Editar Departamento</h1>
+                <input class="descToEdit" type="text" name="description" placeholder="">
+                <button type="submit" id="submitBtnEdit" class="bCss">Salvar Alterações</button>
+            </form>
+        </div>
     </dialog>
 
     <dialog id="deleteDepartment">
-        <button id="closeModalDel">
-            <img src="../assets/Vector (3).png" alt="">
-        </button>
-       <h2>Realmente deseja deletar o Departamento <span class="dD"></span> e demitir seus funcionários?</h2>
-       <button type="submit" id="submitBtnToDel" class="gCss">
-        <p>Confirmar</p>
-       </button>
+        <div id="deleteDepartmentDiv">
+            <button id="closeModalDel">
+                <img src="../assets/Vector (3).png" alt="">
+            </button>
+           <h2>Realmente deseja deletar o Departamento <span class="dD"></span> e demitir seus funcionários?</h2>
+           <button type="submit" id="submitBtnToDel" class="gCss">
+            <p>Confirmar</p>
+           </button>
+        </div>
     </dialog>
 
     <dialog id="editUser">
-        <button id="closeModalEditUser">
-            <img src="../assets/Vector (3).png" alt="">
-        </button>
-        <form>
-            <select name="kind_of_work" id="selKind">
-                <option value="">Selecionar modalidade de trabalho</option>
-                <option value="home office">Home office</option>
-                <option value="hibrido">Hibrido</option>
-                <option value="presencial">Presencial</option>
-            </select>
-            <select name="professional_level" id="selProf">
-                <option value="">nível profissional</option>
-                <option value="estágio">estágio</option>
-                <option value="júnior">júnior</option>
-                <option value="pleno">pleno</option>
-                <option value="sênior">sênior</option>
-            </select>
-            <button type="submit" class="bCss" id="submitBtnEditUser">Editar</button>
-        </form>
+        <div id="editUserDiv">
+            <button id="closeModalEditUser">
+                <img src="../assets/Vector (3).png" alt="">
+            </button>
+            <form>
+                <select name="kind_of_work" id="selKind">
+                    <option value="">Selecionar modalidade de trabalho</option>
+                    <option value="home office">Home office</option>
+                    <option value="hibrido">Hibrido</option>
+                    <option value="presencial">Presencial</option>
+                </select>
+                <select name="professional_level" id="selProf">
+                    <option value="">nível profissional</option>
+                    <option value="estágio">estágio</option>
+                    <option value="júnior">júnior</option>
+                    <option value="pleno">pleno</option>
+                    <option value="sênior">sênior</option>
+                </select>
+                <button type="submit" class="bCss" id="submitBtnEditUser">Editar</button>
+            </form>
+        </div>
     </dialog>
 
     <dialog id="deleteUserDialog">
-        <button id="closeModalDeleteUser">
-            <img src="../assets/Vector (3).png" alt="">
-        </button>
-        <h2>Realmente deseja remover o usuário <span class="dU"></span> ?</h2>
-        <button type="submit" class="gCss" id="submitBtnDelUser">Deletar</button>
+        <div id="deleteUserDiv">
+            <button id="closeModalDeleteUser">
+                <img src="../assets/Vector (3).png" alt="">
+            </button>
+            <h2>Realmente deseja remover o usuário <span class="dU"></span> ?</h2>
+            <button type="submit" class="gCss" id="submitBtnDelUser">Deletar</button>
+        </div>
     </dialog>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
